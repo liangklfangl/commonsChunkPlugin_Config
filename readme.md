@@ -567,6 +567,7 @@ module.exports = {
         main: process.cwd()+'/example5/main.js',
         main1: process.cwd()+'/example5/main1.js',
         jquery:["jquery"]
+        //minChunks: Infinity时候框架代码依然会被单独打包成一个文件
     },
     output: {
         path: process.cwd() + '/dest/example5',
@@ -581,7 +582,53 @@ module.exports = {
 };
 ```
 
+如果把上面的minChunks修改为Infinity，那么chunk1和chunk2(公有的业务逻辑部分,在main.js和main1.js中require进来)`都打包到main.js,main1.js里`，也就是共有逻辑不会抽取出来作为一个单独的chunk,但是jQuery依然会单独打包!注意：此处的jQuery必须在最后加载，因为window.webpackJsonp函数是被打包到jQuery中的!
 
+###参数chunks
+
+下面的配置表示：只有在main.js和main1.js中都引用的模块才会被打包的到公共模块（这里即jquery.js）
+
+```js
+var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+module.exports = {
+    entry: {
+        main: process.cwd()+'/example6/main.js',
+        main1: process.cwd()+'/example6/main1.js',
+        jquery:["jquery"]
+    },
+    output: {
+        path: process.cwd()  + '/dest/example6',
+        filename: '[name].js'
+    },
+    plugins: [
+        new CommonsChunkPlugin({
+            name: "jquery",
+            minChunks:2,
+            chunks:["main","main1"]
+        })
+    ]
+};
+
+```
+
+
+此时你会发现在我们的jquery.js的最后会打包进来我们的chunk1.js和chunk2.js
+
+```js
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+  __webpack_require__(3);
+  var chunk1=1;
+  exports.chunk1=chunk1;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+  var chunk2=1;
+  exports.chunk2=chunk2;
+
+/***/ }
+```
 
 参考资料：
 

@@ -87,26 +87,51 @@
 // };
 
 
+//example6
+// var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+// module.exports = {
+//     entry: {
+//         main: process.cwd()+'/example5/main.js',
+//         main1: process.cwd()+'/example5/main1.js',
+//         jquery:["jquery"]
+//     },
+//     output: {
+//         path: process.cwd() + '/dest/example5',
+//         filename: '[name].js'
+//     },
+//     plugins: [
+//         new CommonsChunkPlugin({
+//             name: "jquery",
+//             // minChunks:2
+//              minChunks:Infinity
+
+//         })
+//     ]
+// };
+
+
 var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 module.exports = {
     entry: {
-        main: process.cwd()+'/example5/main.js',
-        main1: process.cwd()+'/example5/main1.js',
+        main: process.cwd()+'/example6/main.js',
+        main1: process.cwd()+'/example6/main1.js',
         jquery:["jquery"]
     },
     output: {
-        path: process.cwd() + '/dest/example5',
+        path: process.cwd()  + '/dest/example6',
         filename: '[name].js'
     },
     plugins: [
         new CommonsChunkPlugin({
             name: "jquery",
-            minChunks:2
+
+            minChunks:2,
+
+            chunks:["main","main1"]
 
         })
     ]
 };
-
 
 
 
