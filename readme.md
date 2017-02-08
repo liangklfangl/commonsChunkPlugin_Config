@@ -632,4 +632,6 @@ module.exports = {
 
 参考资料：
 
+[webpack打包策略分析](https://github.com/liangklfang/webpack_package)
+
 [webpack CommonsChunkPlugin详细教程](https://segmentfault.com/a/1190000006808865)
