@@ -155,7 +155,7 @@ webpackJsonp([0,1],[
 minChunks:2
 ```
 
-这表示我们必须有两个chunks才会使用commonChunkPlugin，所以我们两个入口文件中共有的chunk1.js和chunk2.js被打印到chunk.js中!
+我们两个入口文件中公有的chunk1.js和chunk2.js被打印到chunk.js中!
 
 ```js
 /******/ (function(modules) { // webpackBootstrap
@@ -273,7 +273,7 @@ minChunks:2
 
 ###将公共业务模块与类库或框架分开打包
 
- #### 例1
+#### 例1
 
 ```js
 var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
@@ -582,7 +582,7 @@ module.exports = {
 };
 ```
 
-如果把上面的minChunks修改为Infinity，那么chunk1和chunk2(公有的业务逻辑部分,在main.js和main1.js中require进来)`都打包到main.js,main1.js里`，也就是共有逻辑不会抽取出来作为一个单独的chunk,但是jQuery依然会单独打包!注意：此处的jQuery必须在最后加载，因为window.webpackJsonp函数是被打包到jQuery中的!
+如果把上面的minChunks修改为Infinity，那么chunk1和chunk2(公有的业务逻辑部分,在main.js和main1.js中require进来)`都打包到main.js,main1.js里`，也就是共有逻辑不会抽取出来作为一个单独的chunk,而是打包到jquery.js中!注意：此处的jquery必须在最先加载，因为window.webpackJsonp函数是被打包到jquery.js中的!
 
 ###参数chunks
 
@@ -633,9 +633,3 @@ module.exports = {
 参考资料：
 
 [webpack CommonsChunkPlugin详细教程](https://segmentfault.com/a/1190000006808865)
-
-
-
-
-
-
