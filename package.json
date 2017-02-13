@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+   "start": "NODE_ENV=development node ./hot/webpack-dev-server --env.dev",
+    "build": "rm -Rf dest/example7 | NODE_ENV=production webpack --config ./hot/webpack.config.js --progress --env.prod"
   },
   "repository": {
     "type": "git",
@@ -28,7 +30,15 @@
     "style-loader": "^0.13.1",
     "swig-loader": "^1.0.0",
     "vue": "^2.1.10",
-    "webpack": "^1.14.0"
+    "webpack": "2.2.0"
   },
-  "homepage": "https://github.com/liangklfangl/commonsChunkPlugin_Config#readme"
+  "homepage": "https://github.com/liangklfangl/commonsChunkPlugin_Config#readme",
+  "devDependencies": {
+     "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+     
+    "webpack-dev-server": "2.2.0"
+  }
 }

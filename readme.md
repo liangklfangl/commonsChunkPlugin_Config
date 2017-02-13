@@ -1,3 +1,6 @@
+## 1.commonschunkplugin插件的使用
+
+
 ###单入口文件时候不能把引用多次的模块打印到commonChunkPlugin中
 
 注意：`example1(对应于目录example1，修改webpack.config.js中的配置就可以了，以下例子相同)`
@@ -630,8 +633,524 @@ module.exports = {
 /***/ }
 ```
 
+
+
+## 2.从commonschunkplugin看Compiler对象
+
+ 首先我们运行example1中的代码，其中webpack配置如下(可以在配置文件中自己打开注释部分):
+```js
+var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+module.exports = {
+  entry: 
+  {
+    main:process.cwd()+'/example1/main.js',
+  },
+  output: {
+    path:process.cwd()+'/dest/example1',
+    filename: '[name].js'
+  },
+  plugins: [
+   new CommonsChunkPlugin({
+       name:"chunk",
+       minChunks:2
+   })
+  ]
+};
+```
+
+我们看看控制台打印的Compiler对象内容:
+
+```js
+Compiler {
+  _plugins: {},
+  outputPath: '',
+  outputFileSystem: null,
+  inputFileSystem: null,
+  recordsInputPath: null,
+  recordsOutputPath: null,
+  records: {},
+  fileTimestamps: {},
+  contextTimestamps: {},
+  resolvers: 
+   { normal: Tapable { _plugins: {}, fileSystem: null },
+     loader: Tapable { _plugins: {}, fileSystem: null },
+     context: Tapable { _plugins: {}, fileSystem: null } },
+  parser: 
+   Parser {
+     _plugins: 
+      { 'evaluate Literal': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate LogicalExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate BinaryExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate UnaryExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate typeof undefined': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate Identifier': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate MemberExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate CallExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate CallExpression .replace': 
+         [ { [Function]
+             [length]: 2,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate CallExpression .substr': 
+         [ { [Function]
+             [length]: 2,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate CallExpression .substring': 
+         [ { [Function]
+             [length]: 2,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate CallExpression .split': 
+         [ { [Function]
+             [length]: 2,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate ConditionalExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate ArrayExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ] },
+     options: undefined },
+  options: 
+   { entry: { main: '/Users/xxx/Desktop/commonsChunkPlugin_Config/example1/main.js' },
+     output: 
+      { path: '/Users/xxx/Desktop/commonsChunkPlugin_Config/dest/example1',
+        filename: '[name].js',
+        libraryTarget: 'var',
+        sourceMapFilename: '[file].map[query]',
+        hotUpdateChunkFilename: '[id].[hash].hot-update.js',
+        hotUpdateMainFilename: '[hash].hot-update.json',
+        crossOriginLoading: false,
+        hashFunction: 'md5',
+        hashDigest: 'hex',
+        hashDigestLength: 20,
+        sourcePrefix: '\t',
+        devtoolLineToLine: false },
+     plugins: 
+      [ CommonsChunkPlugin {
+          chunkNames: 'chunk',
+          filenameTemplate: undefined,
+          minChunks: 2,
+          selectedChunks: undefined,
+          async: undefined,
+          minSize: undefined,
+          ident: '/Users/xxx/Desktop/commonsChunkPlugin_Config/node_modules/webpack/lib/optimize/CommonsChunkPlugin.js0' },
+        [length]: 1 ],
+     context: '/Users/xxx/Desktop/commonsChunkPlugin_Config',
+     debug: false,
+     devtool: false,
+     cache: true,
+     target: 'web',
+     node: 
+      { console: false,
+        process: true,
+        global: true,
+        setImmediate: true,
+        __filename: 'mock',
+        __dirname: 'mock' },
+     resolve: 
+      { fastUnsafe: [ [length]: 0 ],
+        alias: {},
+        packageAlias: 'browser',
+        modulesDirectories: [ 'web_modules', 'node_modules', [length]: 2 ],
+        packageMains: 
+         [ 'webpack',
+           'browser',
+           'web',
+           'browserify',
+           [ 'jam', 'main', [length]: 2 ],
+           'main',
+           [length]: 6 ],
+        extensions: [ '', '.webpack.js', '.web.js', '.js', '.json', [length]: 5 ] },
+     resolveLoader: 
+      { fastUnsafe: [ [length]: 0 ],
+        alias: {},
+        modulesDirectories: 
+         [ 'web_loaders',
+           'web_modules',
+           'node_loaders',
+           'node_modules',
+           [length]: 4 ],
+        packageMains: [ 'webpackLoader', 'webLoader', 'loader', 'main', [length]: 4 ],
+        extensions: 
+         [ '',
+           '.webpack-loader.js',
+           '.web-loader.js',
+           '.loader.js',
+           '.js',
+           [length]: 5 ],
+        moduleTemplates: 
+         [ '*-webpack-loader',
+           '*-web-loader',
+           '*-loader',
+           '*',
+           [length]: 4 ] },
+     module: 
+      { unknownContextRequest: '.',
+        unknownContextRecursive: true,
+        unknownContextRegExp: { /^\.\/.*$/ [lastIndex]: 0 },
+        unknownContextCritical: true,
+        exprContextRequest: '.',
+        exprContextRegExp: { /^\.\/.*$/ [lastIndex]: 0 },
+        exprContextRecursive: true,
+        exprContextCritical: true,
+        wrappedContextRegExp: { /.*/ [lastIndex]: 0 },
+        wrappedContextRecursive: true,
+        wrappedContextCritical: false },
+     optimize: { occurenceOrderPreferEntry: true } },
+  context: '/Users/xxx/Desktop/commonsChunkPlugin_Config' }
+```
+
+### 2.1 首先她有一个Parser对象用于对代码进行解析
+
+```js
+parser: 
+   Parser {
+     _plugins: 
+      { 'evaluate Literal': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate LogicalExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate BinaryExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate UnaryExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate typeof undefined': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+     'evaluate Identifier': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate MemberExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate CallExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate CallExpression .replace': 
+         [ { [Function]
+             [length]: 2,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate CallExpression .substr': 
+         [ { [Function]
+             [length]: 2,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate CallExpression .substring': 
+         [ { [Function]
+             [length]: 2,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate CallExpression .split': 
+         [ { [Function]
+             [length]: 2,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate ConditionalExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ],
+        'evaluate ArrayExpression': 
+         [ { [Function]
+             [length]: 1,
+             [name]: '',
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } },
+           [length]: 1 ] },
+     options: undefined }
+```
+
+分别有 'evaluate Literal'，'evaluate LogicalExpression'， 'evaluate BinaryExpression'，  'evaluate UnaryExpression'(一元的表达式)，  'evaluate typeof undefined':   'evaluate Identifier':   'evaluate MemberExpression'，'evaluate CallExpression'， 'evaluate CallExpression .replace'， 'evaluate CallExpression .substr'， 'evaluate CallExpression .split'， 'evaluate CallExpression .substring'， 'evaluate ConditionalExpression'， 'evaluate ArrayExpression'其中这些部分都牵涉到对AST的解析。
+
+### 2.2 她有一个Option对象表示webpack配置信息
+
+```js
+ options: 
+   { entry: { main: '/Users/xxx/Desktop/commonsChunkPlugin_Config/example1/main.js' },//entry对象表示我们配置的入口文件
+     output: 
+      { path: '/Users/xxx/Desktop/commonsChunkPlugin_Config/dest/example1',
+          //输出路径
+        filename: '[name].js',
+        //文件名配置
+        libraryTarget: 'var',
+        //默认设置为变量类型，其他类型参见下面的分析
+        sourceMapFilename: '[file].map[query]',
+        hotUpdateChunkFilename: '[id].[hash].hot-update.js',
+        hotUpdateMainFilename: '[hash].hot-update.json',
+        crossOriginLoading: false,
+        hashFunction: 'md5',
+        hashDigest: 'hex',
+        hashDigestLength: 20,
+        sourcePrefix: '\t',
+        devtoolLineToLine: false },
+      //output对象表示输出的配置
+     plugins: 
+     //plugins数组表示配置的plugin数组信息
+      [ CommonsChunkPlugin {
+          chunkNames: 'chunk',
+          filenameTemplate: undefined,
+          minChunks: 2,
+          selectedChunks: undefined,//
+          async: undefined,
+          minSize: undefined,
+          ident: '/Users/xxx/Desktop/commonsChunkPlugin_Config/node_modules/webpack/lib/optimize/CommonsChunkPlugin.js0' },
+        [length]: 1 ],
+     //context项目地址
+     context: '/Users/xxx/Desktop/commonsChunkPlugin_Config',
+     debug: false,
+     devtool: false,
+     cache: true,
+     target: 'web',
+     //node
+     node: 
+      { console: false,
+        process: true,
+        global: true,
+        setImmediate: true,
+        __filename: 'mock',
+        __dirname: 'mock' },
+     //resolve对象
+     resolve: 
+      { fastUnsafe: [ [length]: 0 ],
+        alias: {},
+        packageAlias: 'browser',
+        modulesDirectories: [ 'web_modules', 'node_modules', [length]: 2 ],
+        packageMains: 
+         [ 'webpack',
+           'browser',
+           'web',
+           'browserify',
+           [ 'jam', 'main', [length]: 2 ],
+           'main',
+           [length]: 6 ],
+        extensions: [ '', '.webpack.js', '.web.js', '.js', '.json', [length]: 5 ] },
+     //resolveLoader对象
+     resolveLoader: 
+      { fastUnsafe: [ [length]: 0 ],
+        alias: {},
+        modulesDirectories: 
+         [ 'web_loaders',
+           'web_modules',
+           'node_loaders',
+           'node_modules',
+           [length]: 4 ],
+        packageMains: [ 'webpackLoader', 'webLoader', 'loader', 'main', [length]: 4 ],
+        extensions: 
+         [ '',
+           '.webpack-loader.js',
+           '.web-loader.js',
+           '.loader.js',
+           '.js',
+           [length]: 5 ],
+        moduleTemplates: 
+         [ '*-webpack-loader',
+           '*-web-loader',
+           '*-loader',
+           '*',
+           [length]: 4 ] },
+    //module对象
+     module: 
+      { unknownContextRequest: '.',
+        unknownContextRecursive: true,
+        unknownContextRegExp: { /^\.\/.*$/ [lastIndex]: 0 },
+        unknownContextCritical: true,
+        exprContextRequest: '.',
+        exprContextRegExp: { /^\.\/.*$/ [lastIndex]: 0 },
+        exprContextRecursive: true,
+        exprContextCritical: true,
+        wrappedContextRegExp: { /.*/ [lastIndex]: 0 },
+        wrappedContextRecursive: true,
+        wrappedContextCritical: false },
+     optimize: { occurenceOrderPreferEntry: true } }
+```
+
+#### 2.2.1 library和libraryTarget,externals
+
+library和libraryTarget,externals的使用可以参见[webpack中的externals vs libraryTarget vs library](https://github.com/liangklfangl/webpack-external-library)和[webpack中library和libraryTarget与externals的使用](https://github.com/zhengweikeng/blog/issues/10)以及[官方文档](http://webpack.github.io/docs/configuration.html#externals)。通过配置不同的libraryTarget会生成不同umd的代码，例如可以只是commonjs标准的，也可以是指amd标准的，也可以只是通过script标签引入的（参考library_libaryTarget_externals_usage例子），这样就可以满足我们的初始需求:
+
+#### 2.2.2 sourceMapFilename
+
+从上面可以看到是 sourceMapFilename: '[file].map[query]',其在我们的output.path的路径下面。我们给webpack.config.js添加配置：
+
+```js
+ devtool:'cheap-source-map'
+```
+
+此时你会发现在example1目录下打印出来两个chunk对应的sourceMap文件。如下:
+
+![](./map.png)
+
+通过文件名可以知道file这里对应于我们的chunk.js和main.js的文件名。前者表示commonChunkPlugin提取出来的公共模块，虽然是没有公共模块内容：
+
+```js
+/******/ (function(modules) {
+
+  })
+/************************************************************************/
+/******/ ([]);
+//# sourceMappingURL=chunk.js.map
+```
+
+后者表示entry中配置的chunk的名称!
+
+#### 2.2.3 hotUpdateChunkFilename
+
+
+
+
+
+
+
+
+
+
 参考资料：
 
 [webpack打包策略分析](https://github.com/liangklfang/webpack_package)
 
 [webpack CommonsChunkPlugin详细教程](https://segmentfault.com/a/1190000006808865)
+
+[webpack中的externals vs libraryTarget vs library](https://github.com/liangklfangl/webpack-external-library)
+
