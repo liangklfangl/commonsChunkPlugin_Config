@@ -1,7 +1,7 @@
 ## 1.commonschunkplugin插件的使用
+这篇文章告诉了我们CommonsChunkPlugin插件是如何使用的，其详细论述了每一个参数的具体用法以及某几个参数结合起来的作用。但是，如果你对CommonsChunkPlugin的打包原理比较感兴趣，你可以阅读我的[这篇文章](https://github.com/liangklfangl/commonchunkplugin-source-code),其以图解的方式进行了详细论述。但是，如果你最终是为了学习webpack全家桶的内容，我强烈建议您阅读一下[React全家桶完整实例](https://github.com/liangklfangl/react-universal-bucket)，其包含了Webpack常见插件的使用，Babel打包的原理，React组件原理与服务端渲染，高阶组件等常见内容。废话不多说，请继续阅读下面内容。
 
-
-###单入口文件时候不能把引用多次的模块打印到commonChunkPlugin中
+### 单入口文件时候不能把引用多次的模块打印到commonChunkPlugin中
 
 注意：`example1(对应于目录example1，修改webpack.config.js中的配置就可以了，以下例子相同)`
 
@@ -150,7 +150,7 @@ webpackJsonp([0,1],[
 ]);
 ```
 
-###多入口文件时候能把引用多次的模块打印到commonChunkPlugin中
+### 多入口文件时候能把引用多次的模块打印到commonChunkPlugin中
 
 在example2中我们配置了如下:
 
@@ -274,7 +274,7 @@ minChunks:2
 ```
 
 
-###将公共业务模块与类库或框架分开打包
+### 将公共业务模块与类库或框架分开打包
 
 #### 例1
 
@@ -559,7 +559,7 @@ webpackJsonp([4,5],[
 /******/ ([]);
 ```
 
-###参数minChunks: Infinity
+### 参数minChunks: Infinity
 
 下面的配置会把main.js和main1.js公共的业务代码打包到jquery.js中:
 
@@ -587,7 +587,7 @@ module.exports = {
 
 如果把上面的minChunks修改为Infinity，那么chunk1和chunk2(公有的业务逻辑部分,在main.js和main1.js中require进来)`都打包到main.js,main1.js里`，也就是共有逻辑不会抽取出来作为一个单独的chunk,而且也不会打包到jquery.js中(下面的chunks参数配置可以让共有的模块打包到jquery中)!注意：此处的jquery必须在最先加载，因为window.webpackJsonp函数是被打包到jquery.js中的!
 
-###参数chunks
+### 参数chunks
 
 下面的配置表示：只有在main.js和main1.js中都引用的模块才会被打包的到公共模块（这里即jquery.js）
 
