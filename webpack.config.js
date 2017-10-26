@@ -1,29 +1,29 @@
-var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
-module.exports = {
-  entry: 
-  {
-    main:process.cwd()+'/example1/main.js',
-  },
-  output: {
-    path:process.cwd()+'/dest/example1',
-    filename: '[name].js'
-  },
-  devtool:'cheap-source-map',
+// var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+// module.exports = {
+//   entry:
+//   {
+//     main:process.cwd()+'/example1/main.js',
+//   },
+//   output: {
+//     path:process.cwd()+'/dest/example1',
+//     filename: '[name].js'
+//   },
+//   devtool:'cheap-source-map',
 
-  plugins: [
-   new CommonsChunkPlugin({
-       name:"chunk",
-       minChunks:2
-   })
-  ]
-};
+//   plugins: [
+//    new CommonsChunkPlugin({
+//        name:"chunk",
+//        minChunks:2
+//    })
+//   ]
+// };
 
 
 
 
 // var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 // module.exports = {
-//   entry: 
+//   entry:
 //   {
 //       main:process.cwd()+'/example2/main.js',
 //       main1:process.cwd()+'/example2/main1.js',
@@ -149,3 +149,25 @@ module.exports = {
 //   }
 // }
 
+
+var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+var ManifestPlugin = require('webpack-manifest-plugin');
+module.exports = {
+    entry: {
+        main: process.cwd()+'/example8/main.js',
+        main1: process.cwd()+'/example8/main1.js'
+    },
+    output: {
+        path: process.cwd()  + '/dest/example8',
+        filename: '[name].js'
+    },
+    plugins: [
+        new ManifestPlugin(),
+        new CommonsChunkPlugin({
+            name: "common",
+            minChunks:2,
+            chunks:["main","main1"]
+
+        })
+    ]
+};
