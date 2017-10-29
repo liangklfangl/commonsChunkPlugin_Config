@@ -150,24 +150,56 @@
 // }
 
 
+// var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+// var ManifestPlugin = require('webpack-manifest-plugin');
+// module.exports = {
+//     entry: {
+//         main: process.cwd()+'/example8/main.js',
+//         main1: process.cwd()+'/example8/main1.js'
+//     },
+//     output: {
+//         path: process.cwd()  + '/dest/example8',
+//         filename: '[name].js'
+//     },
+//     plugins: [
+//         new ManifestPlugin(),
+//         new CommonsChunkPlugin({
+//             name: "common",
+//             minChunks:2,
+//             chunks:["main","main1"]
+
+//         })
+//     ]
+// };
+
+//chunk-module-assets例子
 var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+var FileListPlugin = require('./chunk-module-assets/FileListPlugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
 module.exports = {
     entry: {
-        main: process.cwd()+'/example8/main.js',
-        main1: process.cwd()+'/example8/main1.js'
+        main: process.cwd()+'/chunk-module-assets/main.js',
+        main1: process.cwd()+'/chunk-module-assets/main1.js',
     },
     output: {
-        path: process.cwd()  + '/dest/example8',
+        path: process.cwd()  + '/dest/chunk-module-assets',
         filename: '[name].js'
     },
+    module:{
+      rules:[
+      {
+          test: /\.(png|jpg|jpeg|gif)(\?v=\d+\.\d+\.\d+)?$/i,
+          use: {
+            loader: require.resolve("url-loader"),
+            //If the file is greater than the limit (in bytes) the file-loader is used and all query parameters are passed to it.
+            //smaller than 10kb will use dataURL
+            options: {
+              limit: 10000
+            }
+          }
+        }]
+    },
     plugins: [
-        new ManifestPlugin(),
-        new CommonsChunkPlugin({
-            name: "common",
-            minChunks:2,
-            chunks:["main","main1"]
-
-        })
+       new FileListPlugin()
     ]
 };
