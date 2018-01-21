@@ -1,5 +1,5 @@
 ## 1.commonschunkplugin插件的使用
-这篇文章告诉了我们CommonsChunkPlugin插件是如何使用的，其详细论述了每一个参数的具体用法以及某几个参数结合起来的作用。但是，如果你对CommonsChunkPlugin的打包原理比较感兴趣，你可以阅读我的[这篇文章](https://github.com/liangklfangl/commonchunkplugin-source-code),其以图解的方式进行了详细论述。但是，如果你最终是为了学习webpack全家桶的内容，我强烈建议您阅读一下[React全家桶完整实例](https://github.com/liangklfangl/react-universal-bucket)，其包含了Webpack常见插件的使用，Babel打包的原理，React组件原理与服务端渲染，高阶组件等常见内容。废话不多说，请继续阅读下面内容。
+这篇文章来自于我的[github文章全集](https://github.com/liangklfangl/react-article-bucket)，其告诉我们CommonsChunkPlugin插件是如何使用的，其详细论述了每一个参数的具体用法以及某几个参数结合起来的作用。但是，如果你对CommonsChunkPlugin的打包原理比较感兴趣，你可以阅读我的[这篇文章](https://github.com/liangklfangl/commonchunkplugin-source-code),其以图解的方式进行了详细论述。但是，如果你最终是为了学习webpack全家桶的内容，我强烈建议您阅读一下[React全家桶完整实例](https://github.com/liangklfangl/react-universal-bucket)，其包含了Webpack常见插件的使用，Babel打包的原理，React组件原理与服务端渲染，高阶组件等常见内容。废话不多说，请继续阅读下面内容。
 
 ### 单入口文件时候不能把引用多次的模块打印到commonChunkPlugin中
 
